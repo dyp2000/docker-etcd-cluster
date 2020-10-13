@@ -1,0 +1,159 @@
+version: "3.8"
+
+services:
+  etcd-node-1:
+    container_name: etcd-node-1
+    restart: on-failure
+    build:
+      context: ./docker/etcd
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_NAME=etcd-node-1
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://10.5.0.10:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001
+      - ETCD_ADVERTISE_CLIENT_URLS=http://10.5.0.10:2379,http://10.5.0.10:4001
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
+      - ETCD_INITIAL_CLUSTER=etcd-node-1=http://10.5.0.10:2380,etcd-node-2=http://10.5.0.11:2380,etcd-node-3=http://10.5.0.12:2380,etcd-node-4=http://10.5.0.13:2380,etcd-node-5=http://10.5.0.14:2380
+      - ETCD_INITIAL_CLUSTER_STATE=new
+    volumes:
+      - ./etcd/data-1:/var/etcd-data
+    networks:
+      etcd-net:
+        ipv4_address: 10.5.0.10
+
+  etcd-node-2:
+    container_name: etcd-node-2
+    restart: on-failure
+    build:
+      context: ./docker/etcd
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_NAME=etcd-node-2
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://10.5.0.11:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001
+      - ETCD_ADVERTISE_CLIENT_URLS=http://10.5.0.11:2379,http://10.5.0.11:4001
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
+      - ETCD_INITIAL_CLUSTER=etcd-node-1=http://10.5.0.10:2380,etcd-node-2=http://10.5.0.11:2380,etcd-node-3=http://10.5.0.12:2380,etcd-node-4=http://10.5.0.13:2380,etcd-node-5=http://10.5.0.14:2380
+      - ETCD_INITIAL_CLUSTER_STATE=new
+    volumes:
+      - ./etcd/data-2:/var/etcd-data
+    networks:
+      etcd-net:
+        ipv4_address: 10.5.0.11
+
+  etcd-node-3:
+    container_name: etcd-node-3
+    restart: on-failure
+    build:
+      context: ./docker/etcd
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_NAME=etcd-node-3
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://10.5.0.12:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001
+      - ETCD_ADVERTISE_CLIENT_URLS=http://10.5.0.12:2379,http://10.5.0.12:4001
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
+      - ETCD_INITIAL_CLUSTER=etcd-node-1=http://10.5.0.10:2380,etcd-node-2=http://10.5.0.11:2380,etcd-node-3=http://10.5.0.12:2380,etcd-node-4=http://10.5.0.13:2380,etcd-node-5=http://10.5.0.14:2380
+      - ETCD_INITIAL_CLUSTER_STATE=new
+    volumes:
+      - ./etcd/data-3:/var/etcd-data
+    networks:
+      etcd-net:
+        ipv4_address: 10.5.0.12
+
+  etcd-node-4:
+    container_name: etcd-node-4
+    restart: on-failure
+    build:
+      context: ./docker/etcd
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_NAME=etcd-node-4
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://10.5.0.13:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001
+      - ETCD_ADVERTISE_CLIENT_URLS=http://10.5.0.13:2379,http://10.5.0.13:4001
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
+      - ETCD_INITIAL_CLUSTER=etcd-node-1=http://10.5.0.10:2380,etcd-node-2=http://10.5.0.11:2380,etcd-node-3=http://10.5.0.12:2380,etcd-node-4=http://10.5.0.13:2380,etcd-node-5=http://10.5.0.14:2380
+      - ETCD_INITIAL_CLUSTER_STATE=new
+    volumes:
+      - ./etcd/data-4:/var/etcd-data
+    networks:
+      etcd-net:
+        ipv4_address: 10.5.0.13
+
+  etcd-node-5:
+    container_name: etcd-node-5
+    restart: on-failure
+    build:
+      context: ./docker/etcd
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_NAME=etcd-node-5
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://10.5.0.14:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379,http://0.0.0.0:4001
+      - ETCD_ADVERTISE_CLIENT_URLS=http://10.5.0.14:2379,http://10.5.0.14:4001
+      - ETCD_INITIAL_CLUSTER_TOKEN=etcd-cluster
+      - ETCD_INITIAL_CLUSTER=etcd-node-1=http://10.5.0.10:2380,etcd-node-2=http://10.5.0.11:2380,etcd-node-3=http://10.5.0.12:2380,etcd-node-4=http://10.5.0.13:2380,etcd-node-5=http://10.5.0.14:2380
+      - ETCD_INITIAL_CLUSTER_STATE=new
+    volumes:
+      - ./etcd/data-5:/var/etcd-data
+    networks:
+      etcd-net:
+        ipv4_address: 10.5.0.14
+
+  etcd-proxy:
+    container_name: etcd-proxy
+    image: haproxy:latest
+    restart: on-failure
+    ports:
+      - 2379:2379
+    depends_on:
+      - etcd-node-1
+      - etcd-node-2
+      - etcd-node-3
+      - etcd-node-4
+      - etcd-node-5
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    tty: true
+    # command: /bin/bash
+    command: haproxy -d -V -f /usr/local/etc/haproxy/haproxy.cfg
+    networks:
+      etcd-net:
+        ipv4_address: 10.5.0.20
+
+  etcd-benchmark:
+    container_name: etcd-benchmark
+    build:
+      context: ./docker/benchmark
+    restart: on-failure
+    depends_on:
+      - etcd-node-1
+      - etcd-node-2
+      - etcd-node-3
+      - etcd-node-4
+      - etcd-node-5
+    tty: true
+    # command: bash -c "benchmark --endpoints=10.5.0.10:2379,10.5.0.11:2379,10.5.0.12:2379,10.5.0.13:2379,10.5.0.14:2379 --conns=100 --clients=1000 put --key-size=8 --sequential-keys --total=100000 --val-size=256"
+    command: /bin/bash
+    networks:
+      etcd-net:
+        ipv4_address: 10.5.0.21
+
+networks:
+  etcd-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
+
+volumes:
+  etcd:
+    driver: local

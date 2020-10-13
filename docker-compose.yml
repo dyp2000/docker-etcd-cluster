@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  etcd-node-1:
+    container_name: etcd-node-1
+    restart: on-failure
+    build:
+      context: ./docker/etcd
+    ports:
+      - 2379:2379
+      - 2380:2380
+      - 4001:4001
+    networks:
+      etcd-net:
+        ipv4_address: 10.5.0.10
+    sysctls:
+      - net.core.somaxconn=1024
+    volumes:
+      - ./etcd-data:/var/etcd-data
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+
+networks:
+  etcd-net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
+
+volumes:
+  etcd-data:
+    driver: local
